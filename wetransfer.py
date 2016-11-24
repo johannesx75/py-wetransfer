@@ -14,6 +14,7 @@ import requests
 import sys
 import json
 import getopt
+import urllib
 
 DOWNLOAD_URL_PARAMS_PREFIX = "downloads/"
 CHUNK_SIZE = 1024
@@ -30,6 +31,7 @@ def download(file_id, recipient_id, security_hash):
         direct_link_path = urlparse(download_data['direct_link']).path
         direct_link_path = direct_link_path.split('/')
         file_name = direct_link_path[-1]
+        file_name = urllib.unquote(file_name)
 
         r = requests.get(download_data['direct_link'], stream=True)
     else:
